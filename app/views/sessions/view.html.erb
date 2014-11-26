@@ -1,0 +1,39 @@
+<script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+  var apiKey    = "45093552";
+  var sessionId = 0;
+
+  var jqxhr = $.ajax({
+    url: "/session/join?id=1",
+    type: "GET"
+  })
+  .done(function(r) {
+    console.log("Success! " + r.responseText);
+  })
+  .fail(function(r, textStatus){
+    console.error("Failed."  + textStatus);
+    console.error("text: " + r.responseText);
+  });
+
+  /*
+  var token     = "YOUR TOKEN HERE";
+
+  var session = OT.initSession(apiKey, sessionId);
+
+  session.on("streamCreated", function(event) {
+    session.subscribe(event.stream);
+  });
+
+  session.connect(token, function(error) {
+    var publisher = OT.initPublisher();
+    session.publish(publisher);
+  });
+  */
+</script>
+
+<html>
+<body>
+</body>
+</html>

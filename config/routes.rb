@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   resource :session
+  get 'session/all' => 'sessions#all'
+  get 'session/join' => 'sessions#join'
+  get 'session/view' => 'sessions#view'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
