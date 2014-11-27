@@ -1,39 +1,58 @@
 <script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
 <script type="text/javascript">
-  var apiKey    = "45093552";
-  var sessionId = 0;
 
-  var jqxhr = $.ajax({
-    url: "/session/join?id=1",
-    type: "GET"
-  })
-  .done(function(r) {
-    console.log("Success! " + r.responseText);
-  })
-  .fail(function(r, textStatus){
-    console.error("Failed."  + textStatus);
-    console.error("text: " + r.responseText);
-  });
+  var appSessionId = 0;
+  try {
+    appSessionId = parseInt(<%= @id %>);//this maps our app's session id to tokbox's session id
+  }
+  catch(e)
+  {
+    console.error(e);
+  }
 
-  /*
-  var token     = "YOUR TOKEN HERE";
+  if(typeof appSessionId !== typeof integer) {
 
-  var session = OT.initSession(apiKey, sessionId);
+    var apiKey    = "45093552";
+    var sessionId = "";  //tokbox session id
+    var token = "";
 
-  session.on("streamCreated", function(event) {
-    session.subscribe(event.stream);
-  });
+    var jqxhr = $.ajax({
+      url: "/session/" + appSessionId + "/token",
+      type: "GET",
+      async: false
+    })
+    .done(function(r) {
+      console.log("Success! " + r.responseText);
+      sessionId = r.sessionid;
+      token = r.token;
+    })
+    .fail(function(r, textStatus){
+      console.error("Failed."  + textStatus);
+      console.error("text: " + r.responseText);
+      $('body').prepend('Failed to get token.');
+    });
 
-  session.connect(token, function(error) {
-    var publisher = OT.initPublisher();
-    session.publish(publisher);
-  });
-  */
+    if(token && sessionId) {
+      var session = OT.initSession(apiKey, sessionId);
+
+      session.on("streamCreated", function(event) {
+        session.subscribe(event.stream);
+      });
+
+      session.connect(token, function(error) {
+        var publisher = OT.initPublisher();
+        session.publish(publisher);
+      });
+    }
+  }
+  else
+  {
+    $('body').prepend("Must specify app session id in querystring.");
+  }
 </script>
 
 <html>
 <body>
+  <p><%= link_to "Index", "/session/index" %></p>
 </body>
 </html>
