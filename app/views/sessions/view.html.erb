@@ -10,7 +10,7 @@
     console.error(e);
   }
 
-  if(typeof appSessionId !== typeof integer) {
+  if(typeof appSessionId === typeof 0) {
 
     var apiKey    = "45093552";
     var sessionId = "";  //tokbox session id
@@ -43,6 +43,10 @@
         var publisher = OT.initPublisher();
         session.publish(publisher);
       });
+
+      $(window).unload(function() {
+        session.disconnect();
+      });
     }
   }
   else
@@ -53,6 +57,6 @@
 
 <html>
 <body>
-  <p><%= link_to "Index", "/session/index" %></p>
+  <p><%= link_to "Index", "/session/index", :id => "end-session", method: :get %></p>
 </body>
 </html>
