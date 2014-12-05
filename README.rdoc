@@ -6,8 +6,8 @@ Included is also a simple workflow at session/index to create, delete, and join 
 * Ruby version
 
 * Configuration
-** Use bundler to install gems.
+  * Use bundler to install gems.
 
 * Database initialization
-** Migrate to latest using 'rake db:migrate'
+  * Migrate to latest using 'rake db:migrate'
 
