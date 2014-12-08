@@ -1,7 +1,7 @@
 require "opentok"
 
 class SessionsController < ApplicationController
-  @@opentok = OpenTok::OpenTok.new "45093552", "2257d2c63aa89446d162d512cb5f034c22fa5b2a"
+  @@opentok = OpenTok::OpenTok.new "API KEY", "API SECRET"
   def new
 
     # A session that will use the OpenTok Media Server:
@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
 
       @token = Token.create(session_id: s.id, token: token, active: true)
       @token.save
-      
+
       jsonResult = {:sessionid => s.sessionid, :token => token }
       render json: jsonResult
 
